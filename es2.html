@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maggiore della somma dei precedenti</title>
+</head>
+<body>
+    <p id="n" ></p>
+
+    <table border="1" id="tab">
+        <thead>
+        <tr>
+            <td> <b> CONT</b></td>
+            <td> <b> NUM</b></td>
+            <td> <b> SOMMA PREC.</b></td>
+            <td> <b> MAX SOMMA PREC.</b></td>
+
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+
+    </table>
+
+    <script>
+    let somma;
+    let str="";
+    let t=document.getElementById("tab");
+    let tbody=t.children[1];
+    var n = [];
+        for(var i=0;i<4;i++){
+            n[i]=Number(prompt("Inserisci n: "));
+            str+="<td>"+n[i]+"</td>";
+            somma+=n[i];
+        }
+    tbody.innerHTML+=somma;
+    tbody.innerHTML+=str;
+    </script>
+</body>
+</html>
