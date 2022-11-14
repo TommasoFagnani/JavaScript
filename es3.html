@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gatti in Fila</title>
+</head>
+<body>
+    
+    <p id="nFile"></p>
+    <p id="resto"></p>
+    <button onclick="mostra()">Aggiungi Colonna</button>
+    <table>
+        <tbody id="tbody"></tbody>
+    </table>
+    <script>
+        var nGatti = Number(prompt("Inserisci n di gatti: "));
+        var gattiFila = Number(prompt("Inserisci gatti per fila: "));
+        let nFile=Math.ceil(nGatti/gattiFila);
+        let resto=(gattiFila-(nGatti%gattiFila));
+
+        function mostra(){
+            var riga = document.createElement("tr");
+            document.getElementById("tbody").appendChild(riga);
+        for(let i=0;i<nFile;i++){  
+            riga = document.createElement("tr");
+            document.getElementById("tbody").appendChild(riga);
+                for(let i=0;i<(gattiFila);i++){
+                    let td = document.createElement("td");
+                    let img = document.createElement("img");
+                    img.src = ("https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+                    td.appendChild(img);
+                    riga.appendChild(td);
+                            }
+
+    } 
+            
+            
+      
+        }
+
+
+
+
+    </script>
+</body>
+</html>
