@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> bollette </title>
+</head>
+<body>
+    <h1>Modo 1</h1>
+    <input type="text" name="" id="codice"> Codice cliente"<br>
+    <input type="text" name="" id="consumo" > Consumo Kw/h<br>
+    <input type="text" name="" id="costokw" disabled  value="0.03">costo Kw/h<br>
+    <input type="text" name="" id="iva" disabled  value="0.22">IVA<br>
+    <input type="text" name="" id="canone" disabled value="20">Canone<br>
+    <button id="add" onclick="inserisci()">Inserisci</button>
+    <button id="add" onclick="calcola()">Calcola</button>
+    <br>
+
+    <table border="1" id="tab">
+        <thead>
+        <tr>
+            <td> <b> Codice</b></td>
+            <td> <b> Consumo KWH * costo</b></td>
+            <td> <b> Canone</b></td>
+            <td> <b> Iva</b></td>
+            <td> <b> Totale</b></td>
+
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+
+    </table>
+    
+    <script>
+        function inserisci(){
+            var cont;
+            const codCliente=document.getElementById("codice").value;
+            const consumo=parseInt(document.getElementById("consumo").value);
+            const costokw=parseFloat(document.getElementById("costokw").value);
+            const iva=parseFloat(document.getElementById("iva").value);
+            const canone=parseFloat(document.getElementById("canone").value);
+            if(isNaN(codCliente))
+                return alert("numero non inserito! ")
+            if(codCliente<0)
+                return alert("il numero deve essere positivo! ")
+            if(isNaN(consumo))
+                return alert("numero non inserito! ")
+            if(consumo<0)
+                return alert("il numero deve essere positivo! ")
+            
+        }
+        function calcola(){
+            var cont;
+            const codCliente=document.getElementById("codice").value;
+            const consumo=parseInt(document.getElementById("consumo").value);
+            const costokw=parseFloat(document.getElementById("costokw").value);
+            const iva=parseFloat(document.getElementById("iva").value);
+            const canone=parseFloat(document.getElementById("canone").value);
+
+            let totCons=consumo*costokw;
+            let totIva=totCons*iva;
+            let totale=totCons+canone+totIva;
+
+            let t=document.getElementById("tab");
+            let tbody=t.children[1];
+            let stringa=tbody.innerHTML;
+
+
+
+            if(isNaN(codCliente))
+                cont++;
+            if(codCliente<0)
+                cont++;
+            if(isNaN(consumo))
+                cont++;
+            if(consumo<0)
+                cont++;
+
+            if(cont>0)
+                tr[cont].remove();
+
+            else
+
+
+            stringa+=`<tr><td>${codCliente}</td>`;
+            stringa+=`<td>${consumo}*${costokw}=${totCons.toFixed(2)}</td>`;
+            stringa+=`<td>${canone}</td>`;
+            stringa+=`<td>${totCons}*${iva*100}%=${totIva.toFixed(2)}</td>`;
+            stringa+=`<td>${totale}€</td></tr>`;
+            tbody.innerHTML=stringa;
+            document.getElementById("codice").value="";
+            document.getElementById("consumo").value="";
+
+        }
+    </script>
+</body>
+</html>
