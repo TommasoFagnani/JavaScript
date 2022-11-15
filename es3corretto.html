@@ -4,66 +4,61 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gatti in Fila</title>
+    <title>Document</title>
     <style>
-    img {
-      max-width: 200px;
-    }
-    table {
-      font-size:2em;
-      text-align: center;
-    }
-  </style>
+        img {
+          max-width: 200px;
+        }
+        table {
+          font-size:2em;
+          text-align: center;
+        }
+      </style>
 </head>
-    
 <body>
-    
-    <p id="nFile"></p>
-    <p id="resto"></p>
-    <button onclick="mostra()">Aggiungi Colonna</button>
     <table>
         <tbody id="tbody"></tbody>
     </table>
     <script>
-        var nGatti = Number(prompt("Inserisci n di gatti: "));
-        var gattiFila = Number(prompt("Inserisci gatti per fila: "));
-        let nFile=Math.ceil(nGatti/gattiFila);
-        let resto=(gattiFila-(gatti-(gattiFila*(Math.ceil(gatti/gattiFila)-1))));
+        
+        //Inserimento numero Gatti
+        let gatti = Number(prompt("Inserisci il numero di Gatti: "));
+        
+        //Inserimento numero di Gatti per fila
+        let gattiFila = Number(prompt("Inserisci il numero di Gatti per fila: "));
 
-        function mostra(){
-            console.log(nFile);
-            var riga = document.createElement("tr");
-            document.getElementById("tbody").appendChild(riga);
-                
-            for(let i=0;i<nFile;i++){  
+        //visualizzazione del numero di file
+        for(var i = 0; i<gatti;i++){
+            if (i%gattiFila == 0){
                 riga = document.createElement("tr");
                 document.getElementById("tbody").appendChild(riga);
-                    for(let i=0;i<gattiFila;i++){  
-                        let td = document.createElement("td");
-                        let img = document.createElement("img");
-                        img.src = ("https://i.kym-cdn.com/entries/icons/original/000/034/421/cover1.jpg");
-                        td.appendChild(img);
-                        riga.appendChild(td);
-                        if(i==nFile-1 && resto>0)
-                                gattiFila-=resto;
+                let td = document.createElement("td");
+                let img = document.createElement("img");
+                img.src = ("https://preview.redd.it/d5uh9juguqo61.jpg?auto=webp&s=13caa9c3c52fc26fd8b7ad9958dacddc9ca90291");
+                td.appendChild(img);
+                riga.appendChild(td);
+            }
+            else{
+                let td = document.createElement("td");
+                let img = document.createElement("img");
+                img.src = ("https://preview.redd.it/d5uh9juguqo61.jpg?auto=webp&s=13caa9c3c52fc26fd8b7ad9958dacddc9ca90291");
+                td.appendChild(img);
+                riga.appendChild(td);
+            }
 
-                            
-                    }
-                    let td = document.createElement("td");
-                        let img = document.createElement("img");
-                        img.src = ("");
-                        td.appendChild(img);
-                        riga.appendChild(td);
-
-            } 
-            
-            
-      
         }
+        //visualizzazione del numero di gatti mancanti all'ultima fila
+        if (gatti%gattiFila!=0){
+            
 
-
-
-
+        for(var x=0;x<(gattiFila-(gatti-(gattiFila*(Math.ceil(gatti/gattiFila)-1))));x++){
+                        
+                        let td = document.createElement("td");
+                        let n = document.createTextNode(x+1);
+                        td.appendChild(n);
+                        riga.appendChild(td);
+                    }
+                }
     </script>
 </body>
 </html>
