@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> bollette </title>
+</head>
+<body>
+    <!-- Caselle di testo per inserimento --> 
+    <h1>Bolletta</h1>
+    <input type="text" name="" id="codice"> Codice cliente"<br>
+    <input type="text" name="" id="consumo" > Consumo Kw/h<br>
+    <input type="text" name="" id="costokw" disabled  value="0.03">costo Kw/h<br>
+    <input type="text" name="" id="iva" disabled  value="0.22">IVA<br>
+    <input type="text" name="" id="canone" disabled value="20">Canone<br>
+    <button id="add" onclick="inserisci()">Inserisci</button>
+    <button id="add" onclick="calcola()">Calcola</button>
+    <br>
+
+    <table border="1" id="tab">
+        <thead>
+        <tr>
+            <td> <b> Codice</b></td>
+            <td> <b> Consumo KWH * costo</b></td>
+            <td> <b> Canone</b></td>
+            <td> <b> Iva</b></td>
+            <td> <b> Totale</b></td>
+
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+
+    </table>
+    
+    <script>
+        //nella funzione inserisci bisogna dichiarare le variabili dove andranno memorizzati i valori.
+        //inoltre vanno fatti i controlli se l'inserimento è vuoto o se il numero inserito è negativo.
+       
+        var i=0;
+        var v1=[];
+        var v2=[];
+        function inserisci(){
+ 
+            var codCliente=document.getElementById("codice").value;
+            var consumo=parseInt(document.getElementById("consumo").value);
+            var costokw=parseFloat(document.getElementById("costokw").value);
+            var iva=parseFloat(document.getElementById("iva").value);
+            var canone=parseFloat(document.getElementById("canone").value);
+            if(isNaN(codCliente))
+                return alert("numero non inserito! ")
+            if(codCliente<0)
+                return alert("il numero deve essere positivo! ")
+            if(isNaN(consumo))
+                return alert("numero non inserito! ")
+            if(consumo<0)
+                return alert("il numero deve essere positivo! ")
+            
+            v1[i]=codCliente;
+            v2[i]=consumo;
+            i++;
+
+
+            
+        }
+        //la funzione calcola serve per visualizzare nella tabella i calcoli eseguiti
+        function calcola(){
+            console.log(i);
+            let ctrl;
+            
+            let totCons=consumo*costokw;
+            let totIva=totCons*iva;
+            let totale=totCons+canone+totIva;
+
+            let t=document.getElementById("tab");
+            let tbody=t.children[1];
+            let stringa=tbody.innerHTML;
+
+            
+        //ho rifatto il controllo che manda un alert se l'inserimento è sbagliato 
+            if((isNaN(codCliente)||codCliente<0)||(isNaN(consumo)||consumo<0))
+                return alert(" input errato! ")
+            else
+                stringa+=`<tr><td>${v1[i]}</td>`;
+                stringa+=`<td>${v2[i]}*${costokw}=${totCons.toFixed(2)}</td>`;
+                stringa+=`<td>${canone}</td>`;
+                stringa+=`<td>${totCons}*${iva*100}%=${totIva.toFixed(2)}</td>`;
+                stringa+=`<td>${totale}€</td></tr>`;
+                tbody.innerHTML=stringa;
+                document.getElementById("codice").value="";
+                document.getElementById("consumo").value="";
+                // console.log(totale);
+                // i++;
+                // alert(i)
+            
+            
+
+        }
+    </script>
+</body>
+</html>
