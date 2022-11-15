@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gatti in Fila</title>
+    <style>
+    img {
+      max-width: 200px;
+    }
+    table {
+      font-size:2em;
+      text-align: center;
+    }
+  </style>
+</head>
+    
+<body>
+    
+    <p id="nFile"></p>
+    <p id="resto"></p>
+    <button onclick="mostra()">Aggiungi Colonna</button>
+    <table>
+        <tbody id="tbody"></tbody>
+    </table>
+    <script>
+        var nGatti = Number(prompt("Inserisci n di gatti: "));
+        var gattiFila = Number(prompt("Inserisci gatti per fila: "));
+        let nFile=Math.ceil(nGatti/gattiFila);
+        let resto=(gattiFila-(gatti-(gattiFila*(Math.ceil(gatti/gattiFila)-1))));
+
+        function mostra(){
+            console.log(nFile);
+            var riga = document.createElement("tr");
+            document.getElementById("tbody").appendChild(riga);
+                
+            for(let i=0;i<nFile;i++){  
+                riga = document.createElement("tr");
+                document.getElementById("tbody").appendChild(riga);
+                    for(let i=0;i<gattiFila;i++){  
+                        let td = document.createElement("td");
+                        let img = document.createElement("img");
+                        img.src = ("https://i.kym-cdn.com/entries/icons/original/000/034/421/cover1.jpg");
+                        td.appendChild(img);
+                        riga.appendChild(td);
+                        if(i==nFile-1 && resto>0)
+                                gattiFila-=resto;
+
+                            
+                    }
+                    let td = document.createElement("td");
+                        let img = document.createElement("img");
+                        img.src = ("");
+                        td.appendChild(img);
+                        riga.appendChild(td);
+
+            } 
+            
+            
+      
+        }
+
+
+
+
+    </script>
+</body>
+</html>
