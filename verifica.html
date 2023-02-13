@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Flusso di cassa mensile</h1>
+    <p> <input type="text" name="" id="val"> valore </p>
+    <input type="radio" id="piu" name="segno" value="+">+ <br>
+    <input type="radio" id="meno" name="segno" value="-">- <br>
+    <button id="Inserisci" onclick="inserisci()">Inserisci</button>
+    <h1>Operazioni effettuate</h1>
+    <p id="operazioni"></p>
+    <h1>Totale</h1>
+    <p id="somma"></p>
+    
+    <script>
+            
+            
+            var valIniz = prompt("Inserisci valore di cassa iniziale");
+            document.getElementById("operazioni").innerHTML=valIniz;
+            var tot=0;
+            tot+=valIniz;
+
+            function inserisci(){ 
+                
+                var operazione="";
+                var valSomma = document.getElementById("val").value;
+                
+
+                if (document.getElementById("piu").checked==true){
+                    operazione='+';
+                    valSomma = Number(valSomma);
+                    tot = Number(tot);
+                    tot += valSomma;
+                }
+                else if (document.getElementById("meno").checked==true){
+                    operazione='-';
+                    tot-=valSomma;
+                    
+                }
+                document.getElementById("somma").innerHTML=tot;
+                document.getElementById("operazioni").innerHTML+=operazione+valSomma;
+
+                
+            }
+            
+            
+            
+           
+
+        
+    </script>
+</body>
+</html>
