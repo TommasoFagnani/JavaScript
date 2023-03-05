@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //CREAZIONE DI OGGETTI
+        //2) Per evitare di dover ridefinire da zero oggetti che hanno la stessa struttura possiamo ricorrere ad un costruttore.
+        //Un costruttore non è altro che una normale funzione JavaScript invocata mediante l’operatore new.
+        var persone = new Array();
+        var persona1 = {nome:"John",cognome:"Doe",anni:50,altezza:180};
+        var persona2 = {nome: "Mario",cognome: "Rossi",anni : 25,altezza : 167}
+        persone.push(persona1); 
+        persone.push(persona2);
+
+        function creaPersona(nome, cognome, anni,altezza){ //Questo costruttore definisce i parametri nome, cognome, anni e altezza
+
+        this.nome = nome;
+
+        this.cognome = cognome;
+
+        this.anni = anni;
+
+        this.altezza = altezza;
+
+        this.tutto = function (){   //Questa funzione restituisce una stringa con tutti parametri di una persona
+        return(this.nome+";"+this.cognome+";"+this.anni+";"+this.altezza);
+
+        }
+
+        console.log(this);
+
+        }
+        //Inserimento parametri tramite input dell'utente 
+        let a=prompt("Nome ");
+
+        let b=prompt("Cognome ");
+
+        let c=parseInt(prompt("Anni ?"));
+        let d=Number(prompt("Altezza ?"));
+
+        
+         //Creazione di un vettore
+        // creazione di un nuovo oggetto persona --> "persona3"
+            persona3 = new creaPersona(a,b,c,d);
+            persone.push(persona3); //Inserimento della nuova persona nel vettore
+
+            console.log("Tutto "+persone[2].tutto());
+            console.log(persona2);
+
+            console.log(persone[2]);
+
+    </script>
+</body>
+</html>
