@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduzione Oggetti</title>
+</head>
+<body>
+    <script>
+        //Dichiarazione oggetto
+        //Un oggetto è un insieme di proprietà e di valori
+        //Un oggetto può assumere tutti i valori convertibili in una stringa
+        //I valori che non si possono convertire in stringa si scrivono tra apici
+        var Person = {
+            name : 'Nome', 
+            age : '18',
+            single : false,
+            '' : null,
+            3 : 4,
+            'birth-date':'230872'
+        };
+        console.log(Person); //Visualizzazione di tutti i valori dell'oggetto
+        console.log(Person.age); //Visualizzazione di un valore tramite dot notation
+        console.log(Person[3]) //Visualizzazione di un valore tramite le parentesi quadre, all'interno si inserisce il valore da visualizzare
+        console.log(Person['age']); //si mette tra apici perchè è una stringa, sennò javascript cercherebbe una variabile chiamata age che non esiste
+        console.log(Person['birth-date']);
+    </script>
+</body>
+</html>
