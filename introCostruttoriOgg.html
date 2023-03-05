@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        function Animal(){ //costruttore di una funzione
+            this.type = 'Animal'; // Il this dice che i parametri non appartengono alla funzione ma all'oggetto
+            this.abitat = 'Terra';
+        }
+    var cane = new Animal(); // Il New fa comprendere a javascript che deve utilizzare il costruttore di 'animal'
+    //Type e abitat appartengono all'oggetto  cane
+    console.log(cane.abitat);  
+    // Se non viene istanziata l'oggetto cane con 'new' abitat si trasforma in una variabile e si rifà al vslore standard del costruttore
+    //console.log(abitat);
+    //console.log(window.abitat);
+    
+    </script>
+    
+</body>
+</html>
