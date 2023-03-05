@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Macchine in garage </h2>
+    <p id="demo"></p>
+    <script>
+    let car, tipo, modello, colore;
+    let cars = new Array(); //Creazione di un array 
+    for (let i= 0; i < 3;i++) { //Riempimento dell'array cars con oggetti di tipo car creati dall'input dell'utente tramite il ciclo for. Ogni auto ha 3 proprietà: tipo, modello, colore.
+    tipo = prompt("Tipo?");
+    modello = prompt("Modello?");
+    colore = prompt ("Colore?");
+    car = {
+    type: tipo,
+    model: modello,
+    color: colore
+    }
+    cars.push(car);
+
+    }
+    //creazione di un elenco in formato testuale di tutte le auto inserite nell'array cars, utilizzando il ciclo for per accedere a ciascun oggetto.
+    let out = "";
+    console.log(cars.length);
+    for (let i = 0; i < cars.length; i++) {
+        out = out + "<br>" + cars[i].type + " " + cars[i].model + " " + cars[i].color;
+        console. log(cars[i].type + " " + cars[i].model + " " + cars[i].color);
+
+    }
+
+    //document.getElementById("demo").innerHTML = "Tipo dell'auto: " + car.type;
+
+    document.getElementById("demo").innerHTML += out;
+
+</script>
+
+</body>
+</html>
