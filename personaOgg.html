@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduzione Oggetti</title>
+</head>
+<body>
+    <script>
+    //CREAZIONE DI OGGETTI
+    //1) Utilizzando la notazione letterale.
+    //Definizione dei due oggetti 
+        var persona1 = {nome:"John",cognome:"Doe",anni:50,altezza:180};
+        var persona2 = {
+        nome: "Mario",
+        cognome: "Rossi",
+        anni : 25,
+        altezza : 167
+    }
+    var persone = new Array(); //Creazione di un vettore
+    persone.push(persona1); //Inserimento degli oggetti di tipo persona all'interno del vettore
+    persone.push(persona2);
+
+    console.log(persone[0].nome); //Visualizzazione del nome di persona1 tramite dot notation
+    console.log(persone[0].cognome); //Visualizzazione del cognome di persona1 tramite dot notation
+    console.log(persone[0].altezza); //Visualizzazione dell'altezza di persona1 tramite dot notation
+    console.log(persone[1].nome); //Visualizzazione del nome di persona3 tramite dot notation
+    console.log(persone[1].cognome); //Visualizzazione del cognome di persona2 tramite dot notation
+    console.log(persone[1].altezza); //Visualizzazione dell'altezza di persona3 tramite dot notation
+
+    //ciclo for per visualizzare tutti i valori degli oggetti persona all'interno dell'array
+    //Visualizzazione tramite dot notation
+    for (i=0;i<persone.length;i++){  
+        console.log(persone[i].nome);
+        console.log(persone[i].cognome);
+        console.log(persone[i].altezza);
+    }
+
+    persone[0].nome="Rossi";
+    persone[0].cognome="Guido";
+    persone[0].altezza="verdi";
+    </script>
+</body>
+</html>
