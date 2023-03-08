@@ -34,6 +34,7 @@
             <input type="text" class="form-control" id="targa"  placeholder="targa">
         </div>
     </form>
+    
     <button type="button" onclick="Inserisci()" class="btn btn-success">Inserisci</button>
     <button type="button" onclick="Aggiorna()" class="btn btn-primary">Aggiorna</button>
 
@@ -57,7 +58,7 @@
     <script>
         pos=0
         let cars = new Array();    
-        
+
         function Automobile(marca,modello,colore,anno,targa){
             this.marca=marca;
             this.modello=modello;
@@ -69,18 +70,18 @@
                 }
             }
         function Inserisci(){
-
+        let t=document.getElementById("tab");
+        let tbody=t.children[1];
+        const tr=document.createElement("tr");
+        let td=document.createElement("td");
 
             car = new Automobile(document.getElementById("marca").value,
                                  document.getElementById("modello").value,
                                  document.getElementById("colore").value,
                                  document.getElementById("anno").value,
                                  document.getElementById("targa").value);
+            cars.push(car);
             pos+=1;
-            let t=document.getElementById("tab");
-            let tbody=t.children[1];
-            const tr=document.createElement("tr");
-            let td=document.createElement("td");
 
             td.innerText=`${pos}`;
             tr.appendChild(td);
@@ -90,7 +91,7 @@
             tr.appendChild(td);
             td=document.createElement("td");
 
-            td.innerText=`${car.modello}€`;
+            td.innerText=`${car.modello}`;
             tr.appendChild(td);
             td=document.createElement("td");
 
@@ -105,13 +106,97 @@
             td.innerText=`${car.targa}`;
             tr.appendChild(td);
             td=document.createElement("td");
+
             tbody.appendChild(tr);
 
         }
-        function Aggiorna(){
-            targa = prompt ("targa?");
-            
+        function ricercaTarga(targa){      
+            for (var i = 0; i < cars.length; i++) {
+                if (cars[i].targa === targa) {
+                return cars[i];
+                }
+            }
+            return null;
         }
+        /*function removeTableRow(row) {
+            var table = row.parentNode.parentNode;
+            table.deleteRow(row.rowIndex);
+        }*/
+        function Aggiorna(){   
+        let t=document.getElementById("tab");
+        let tbody=t.children[1];
+        const tr=document.createElement("tr");
+        let td=document.createElement("td");
+        var targa = prompt("Inserisci il numero di targa della macchina che vuoi modificare:");
+        var car1 = ricercaTarga(targa);
+        if (car1 != null) {
+            
+            var marca = prompt("Inserisci la marca:");
+            var modello = prompt("Inserisci il modello:");
+            var colore = prompt("Inserisci il colore:");
+            var anno = prompt("Inserisci l'anno :");
+            
+            if (marca !== "") {
+            car1.marca = marca;
+            }
+            if (modello !== "") {
+            car1.modello = modello;
+            }
+            if (colore !== "") {
+            car1.colore = colore;
+            }
+            if (anno !== "") {
+            car1.anno = anno;
+            }
+            //removeAndAddRow(t,pos);
+            td.innerText=`${pos}`;
+            tr.appendChild(td);
+            td=document.createElement("td");
+
+            td.innerText=`${car.marca}`;
+            tr.appendChild(td);
+            td=document.createElement("td");
+
+            td.innerText=`${car.modello}`;
+            tr.appendChild(td);
+            td=document.createElement("td");
+
+            td.innerText=`${car.colore}`;
+            tr.appendChild(td);
+            td=document.createElement("td");
+
+            td.innerText=`${car.anno}`;
+            tr.appendChild(td);
+            td=document.createElement("td");
+
+            td.innerText=`${car.targa}`;
+            tr.appendChild(td);
+            td=document.createElement("td");
+
+            tbody.appendChild(tr);
+            console.log("Macchina modificata:", car1);
+        } else {
+            alert("Nessuna macchina trovata con la targa inserita.");
+            console.log("Nessuna macchina trovata con la targa inserita.");
+        }
+        }
+        /*function removeAndAddRow(t, pos) {
+          var table = document.getElementById(t);
+          var rowCount = tbody.rows.length;
+          if (rowCount > 0 && pos < rowCount) {
+            table.deleteRow(pos); // Rimuove la riga indicata
+            var newRow = table.insertRow(pos); // Aggiunge una nuova riga nella stessa posizione
+            var newCell1 = newRow.insertCell(0); // Aggiunge la prima cella nella nuova riga
+            var newCell2 = newRow.insertCell(1); // Aggiunge la seconda cella nella nuova riga
+            var newText1 = document.createTextNode("Nuovo contenuto colonna 1"); // Crea il nuovo contenuto per la prima cella
+            var newText2 = document.createTextNode("Nuovo contenuto colonna 2"); // Crea il nuovo contenuto per la seconda cella
+            newCell1.appendChild(newText1); // Aggiunge il nuovo contenuto alla prima cella
+            newCell2.appendChild(newText2); // Aggiunge il nuovo contenuto alla seconda cella
+          }
+        }*/
+
+                    
+        
     </script>
 
   </body>
