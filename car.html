@@ -36,16 +36,21 @@
       </form>
 
 
+
+
       <button id = "btnAdd" onclick="garage()" class="btn btn-primary">Aggiungi</button>
       <button id = "btnAdd" onclick="aggiorna()" class="btn btn-secondary">Aggiorna</button>
-      
+     
 
-    <center>
 
     
-    <table id="tab" class="table">
+
+
+   
+    <table id="tab" class="table" style="margin-left: auto; margin-right: auto;">
         <thead class="table-dark">
             <tr>
+                <center>
                 <td>#</td>
                 <td>Marca</td>
                 <td>Modello</td>
@@ -53,24 +58,21 @@
                 <td>Anno</td>
                 <td>Targa</td>
                 <td><button id = "btnAdd" onclick="elimina()" class="btn btn-danger">Elimina</button></td>
-                
+                </center>
             </tr>
         </thead>
     <tbody >
 
-
-
     </tbody>
     </table>
-</center>
-
 
     <script>
+        //Dichiarazione variabili
         let pos = 0;
         var tabella=document.getElementById("tab");
         var tbody=tabella.children[1];
 
-
+        //Funzione per dichiarare l'oggetto
         function Automobile(marca,modello,colore,anno,targa){
             this.marca = marca;
             this.modello = modello;
@@ -78,12 +80,22 @@
             this.anno = anno;
             this.targa = targa;
             pos += 1;
-
         }
+
         function setCar(marca, modello, colore, anno, targa){
             let car = new Automobile(marca, modello, colore, anno, targa);
             return car;
-           
+        }
+
+        function ricercaTarga(){
+            var targaProv = prompt("Inserisci targa: ");
+            for(let i = 0; i<pos; i++){
+                if (targaProv == tbody.children[i].children[5].innerText){
+                    return i;
+                }
+            }
+            alert("Veicolo non trovato!!");
+            return -1;
         }
 
         function garage(){
@@ -98,26 +110,30 @@
         function visualizza(car, ind, pos){
             if (ind < pos){
                 var tr = tbody.children[ind];
-                
+               
                 let td = tr.children[0];
                 td.innerText=`${ind+1}`;
 
+
                 td=tr.children[1];
                 td.innerText=`${car.marca}`;
-                
+               
+
 
                 td=tr.children[2];
                 td.innerText=`${car.modello}`;
 
+
                 td=tr.children[3];
                 td.innerText=`${car.colore}`;
-                
+               
                 td=tr.children[4];
                 td.innerText=`${car.anno}`;
 
+
                 td=tr.children[5];
                 td.innerText=`${car.targa}`;
-                
+               
             }else{
                 var tr=document.createElement("tr");
                 let td=document.createElement("td");
@@ -143,53 +159,35 @@
         }
 
         function aggiorna(){
-           
-            ind = ricercaTarga();
-            visualizza(setCar(marca, modello, colore, anno, targaProv), ind, pos);
-            
+            var ind = ricercaTarga();
+            if (ind != -1){
+                var marca = prompt("Inserire la marca: ");
+                var modello = prompt("Inserire il modello: ");
+                var colore = prompt("Inserire il colore: ");
+                var anno = prompt("Inserire l'anno: ");
+                var targa = tbody.children[0].children[5].innerText;
+            visualizza(setCar(marca, modello, colore, anno, targa), ind, pos);
         }
-               
-            
-            
-        
-
-        function ricercaTarga(){
-            var targaProv = prompt("Inserisci targa: ");
-            for(let i = 0; i<pos; i++){
-                if (targaProv == tbody.children[i].children[5].innerText){
-                    return i;
-                    
-                }
-            }
-            alert("Veicolo non trovato!!");
-            return -1;
-        }
+    }
 
         function elimina(){
-            ind = ricercaTarga();
-            tbody.children[ind].removeChild();
+            var ind = ricercaTarga();
+            if (ind != -1){
+                tbody.deleteRow(ind);
+                pos -= 1;
+                if (ind < pos-1 || ind > 0){
+                    for (var i = ind; i < pos; i ++){
+                        (tbody.children[i].children[0]).innerText = `${i+1}`;
+                        
+                    }
+                }
+                if ( pos == 1){
+                    var tr = (tbody.children[0].children[0]).innerText = 1; 
+                }
+            }
         }
        
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
