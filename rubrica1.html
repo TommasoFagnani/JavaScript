@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rubrica 1</title>
+</head>
+<body>
+    
+    <script>
+        class Contatto{
+            constructor(cognome, nome, telefono, email){
+                this.cognome=cognome;
+                this.nome=nome;
+                this.telefono=telefono;
+                this.email=email;
+            }
+        }
+
+        class Rubrica{
+            constructor(contatto){
+                this.contatti = new Array();
+
+                this.aggiungi = function(contatto){
+                    this.contatti.push(contatto);
+                }
+                this.modifica = function(indice, cognome,nome,telefono,email){
+                    this.contatti[indice].cognome = cognome;
+                    this.contatti[indice].nome = nome;
+                    this.contatti[indice].telefono = telefono;
+                    this.contatti[indice].email = email;
+                }
+                this.visualizza = function(){
+                    let s = "";
+                    for(let i=0;i<this.contatti.length;i++){
+                        s += this.contatti[i].cognome+" "+this.contatti[i].nome+" "+this.contatti[i].telefono+" "+this.contatti[i].email;
+                    }
+                    return s;
+                }
+                this.cerca = function(cognome,nome){
+                    for(let i=0;i<this.contatti.length;i++){
+                        if(this.contatti[i].cognome==cognome && this.contatti[i].nome==nome)
+                            return i;
+                    }
+                    return -1;
+                }
+                this.elimina = function(indice){
+                    this.contatti.slice(indice,1);
+                }
+            }
+        }
+
+        var rub = new Rubrica();
+        var cont1 = new Contatto("Rossi","Mario","23456789","email@gmail.com");
+        var cont2 = new Contatto("Verdi","Piero","57382927","email2@gmail.com");
+        rub.aggiungi(cont1);
+        rub.aggiungi(cont2);
+        console.log("Tutti i contatti: " + rub.visualizza());
+        console.log("Modifica out=" + rub.modifica(1,"Verdi2","Piero2","163746251","email2@gmail2.com"));
+        console.log(rub.cerca("Mario"));
+        console.log(rub.elimina(0));
+        console.log(rub.visualizza());
+    </script>
+</body>
+</html>
