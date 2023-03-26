@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rubrica v2</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+    <h2>Rubrica v2</h2>
+    <p id="demo"></p>
+    <form>
+        <div class="form-group" >
+          <label for="exampleInputtext1">Cognome</label>
+          <input type="text" class="form-control" id="cognome" placeholder="Inserisci il cognome" >
+        </div>
+        <div class="form-group">
+          <label for="exampleInputyext1">Nome</label>
+          <input type="text" class="form-control" id="nome" placeholder="Inserisci il nome">
+        </div>
+       
+          <div class="form-group">
+            <label for="exampleInputtext1">Telefono</label>
+            <select id="telefono" class="form-select" aria-label="Default select example">
+                <option selected>Scegli</option>
+                <option value="1">Personale</option>
+                <option value="2">Aziendale</option>
+              </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputtext1">Numero</label>
+            <input type="text" class="form-control" id="numero" placeholder="Inserisci il numero">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputtext1">Email</label>
+            <input type="text" class="form-control" id="email" placeholder="Inserisci email">
+          </div>
+      </form>
+
+
+
+
+      <button id = "btnAdd" onclick="add()" class="btn btn-primary">Inserisci contatto</button>
+      <button id = "btnAdd" onclick="del()" class="btn btn-danger">Elimina</button>
+      <button id = "btnAdd" onclick="update()" class="btn btn-info">Aggiorna contatto</button>
+      <button id = "btnAdd" onclick="search()" class="btn btn-success">Cerca contatto</button>
+     
+
+
+    
+
+
+   
+    <table id="tab" class="table" style="margin-left: auto; margin-right: auto;">
+        <thead class="table-dark">
+            <tr>
+                <center>
+                <td>Cognome</td>
+                <td>Nome</td>
+                <td>Telefono</td>
+                <td>Email</td>
+                </center>
+            </tr>
+        </thead>
+    <tbody >
+
+    </tbody>
+    </table>
+
+    <script>
+      
+class Contatto {
+  constructor(cognome, nome, telefono, email) {
+    this.cognome = cognome;
+    this.nome = nome;
+    this.telefono = telefono;
+    this.email = email;
+  }
+}
+
+class Rubrica {
+  constructor() {
+    this.contatti = [];
+  }
+
+  aggiungi(contatto) {
+    this.contatti.push(contatto);
+    this.aggiornaRubrica();
+  }
+
+  visualizza() {
+    var s = "";
+    if (this.contatti.length === 0) {
+      console.log("La rubrica è vuota.");
+    } else {
+      console.log("Lista contatti:");
+      for (var i = 0; i < this.contatti.length; i++) {
+        console.log((i+1) + ") " + this.contatti[i].cognome + " " + this.contatti[i].nome + " - " + this.contatti[i].telefono + " - " + this.contatti[i].email);
+        s += (i+1) + ") " + this.contatti[i].cognome + " " + this.contatti[i].nome + " - " + this.contatti[i].telefono + " - " + this.contatti[i].email + "\n";
+      }
+    }
+    return s;
+  }
+
+  modifica(indice, cognome, nome, telefono, email) {
+    this.contatti[indice].cognome = cognome;
+    this.contatti[indice].nome = nome;
+    this.contatti[indice].telefono = telefono;
+    this.contatti[indice].email = email;
+    return "Modifica avvenuta";
+  }
+
+  cerca(cognome, nome) {
+  var risultati = [];
+  var indice = -1;
+  for (var i = 0; i < this.contatti.length; i++) {
+    if (this.contatti[i].cognome === cognome && this.contatti[i].nome === nome) {
+      risultati.push(this.contatti[i]);
+      indice = i;
+    }
+  }
+  if (risultati.length === 0) {
+    return "Nessun contatto trovato.";
+  } else {
+    return indice;
+  }
+}
+
+
+  elimina(indice) {
+    this.contatti.splice(indice, 1);
+    return "Eliminazione avvenuta con successo.";
+  }
+
+  aggiornaRubrica(cognome, nome, telefono, email) {
+    var tabella = document.getElementById("tab");
+    while (tabella.rows.length > 1) {
+      tabella.deleteRow(1);
+    }
+    for (var i = 0; i < this.contatti.length; i++) {
+      var contatto = this.contatti[i];
+
+      var riga = tabella.insertRow(i + 1);
+      riga.insertCell(0).innerHTML = contatto.cognome;
+      riga.insertCell(1).innerHTML = contatto.nome;
+      riga.insertCell(2).innerHTML = contatto.telefono;
+      riga.insertCell(3).innerHTML = contatto.email;
+    }
+  }
+
+
+  evidenziaRiga(indice) {
+  var tabella = document.getElementById("tab");
+  while (tabella.rows.length > 1) {
+    tabella.deleteRow(1);
+  }
+  for (var i = 0; i < this.contatti.length; i++) {
+    var contatto = this.contatti[i];
+
+    var riga = tabella.insertRow(i + 1);
+    riga.insertCell(0).innerHTML = contatto.cognome;
+    riga.insertCell(1).innerHTML = contatto.nome;
+    riga.insertCell(2).innerHTML = contatto.telefono;
+    riga.insertCell(3).innerHTML = contatto.email;
+
+  }
+}
+
+}
+/*var rubrica = new Rubrica();
+var contatto = new Contatto(this.cognome, this.nome, this.telefono, this.email);
+rubrica.aggiungi(contatto);
+
+console.log(rubrica);
+console.log(contatto.cognome);
+
+*/
+var rubrica = new Rubrica();
+function add(){
+  var cont1 = new Contatto(
+    document.getElementById("cognome").value,
+    document.getElementById("nome").value,
+    document.getElementById("telefono").value,
+    document.getElementById("email").value
+    );
+    rubrica.aggiungi(cont1);
+}
+
+function del(){
+  var tabella = document.getElementById("tab");
+  var cgnElementoDaEliminare = prompt("Inserisci cognome: ");
+  var nomElementoDaEliminare = prompt("Inserisci nome: ");
+  index=rubrica.cerca(cgnElementoDaEliminare,nomElementoDaEliminare);
+  rubrica.elimina(index);
+  tabella.deleteRow(index+1);
+}
+
+function update(){
+  var cgnElementoDaEliminare = prompt("Inserisci cognome: ");
+  var nomElementoDaEliminare = prompt("Inserisci nome: ");
+  index=rubrica.cerca(cgnElementoDaEliminare,nomElementoDaEliminare);
+  var cognome1 = prompt("Inserisci nuovo cognome: ");
+  var nome1 = prompt("Inserisci nuovo nome: ");
+  var telefono1 = prompt("Inserisci nuovo numero di telefono: ");
+  var email1 = prompt("Inserisci nuova email: ");
+  rubrica.modifica(index,cognome1,nome1,telefono1,email1);
+  rubrica.aggiornaRubrica(cognome1,nome1,telefono1,email1);
+}
+
+function search(){
+  var cgnElementoDaEliminare = prompt("Inserisci cognome: ");
+  var nomElementoDaEliminare = prompt("Inserisci nome: ");
+  index=rubrica.cerca(cgnElementoDaEliminare,nomElementoDaEliminare);
+  rubrica.evidenziaRiga();
+
+}
+
+/*rubrica.visualizza();
+console.log("modifica out "+rubrica.modifica(1, "Verdi2", "Piero2", "9902323332", "email2@lamiamail2.it"));
+rubrica.visualizza();
+console.log(rubrica.cerca("Mario", "Rossi"));
+console.log(rubrica.elimina(0));
+rubrica.visualizza();*/
+
+</script>
+</body>
+</html>
