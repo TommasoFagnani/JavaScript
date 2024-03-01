@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canzoni Ascoltate di Recente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+    
+        <table class="table table-dark table-striped" border="1" id="songTableRow">
+            <tr>
+                <th>Artista</th>
+                <th>Titolo</th>
+                <th>Copertina</th>
+                <th>Ascolta</th>
+            </tr>
+        </table>
+
+    <div id="spotifyPlayer"></div>
+
+    <script type="text/javascript">
+        var access_token = "BQAK28S2g6sOM6cvkCYCBXXiO9MS0Eo9U6_j2PnE2kdhotHvAVfCG1xsHbvNA3Z7X_F8mvh-4NhS4b9gFMh9SPXBCCm_jkEyDsJVfT2onNF8-1TkQZQTBY42mU9gsMvSkP6HCFMZBUEYHrMheVxJbU2iU5UXNOvokUH4P_BFPul3FB2NQHzEtwL1iofLcfHYlACf6sdQTR4gOU8fREkAf7-t";
+        
+        async function ascoltiRecenti() {
+            try {
+                const response = await fetch('https://api.spotify.com/v1/me/player/recently-played', {
+                    headers: {
+                        'Authorization': `Bearer ${access_token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Errore nella richiesta: ${response.status}`);
+                }
+
+                const jsonData = await response.json();
+                return jsonData.items;
+            } catch (error) {
+                console.error('Errore durante la richiesta:', error);
+                return [];
+            }
+        }
+
+        async function renderTable() {
+            try {
+                const recentSongs = await ascoltiRecenti();
+
+                let tbody = "";
+                recentSongs.forEach(song => {
+                    const artistName = song.track.artists[0].name;
+                    const songTitle = song.track.name;
+                    const albumCoverUrl = song.track.album.images[0].url;
+                    const songId = song.track.id;
+
+                    tbody += "<tr>";
+                    tbody += `<td>${artistName}</td>`;
+                    tbody += `<td>${songTitle}</td>`;
+                    tbody += `<td><img src="${albumCoverUrl}" alt="Copertina Album" width="50"></td>`;
+                    tbody += `<td><button class="btn btn-dark" onclick="playSong('${songId}', '${songTitle}')">Play</button></td>`;
+                    tbody += "</tr>";
+                });
+
+                const tableRow = document.getElementById('songTableRow');
+                tableRow.innerHTML += tbody;
+            } catch (error) {
+                console.error('Errore durante la visualizzazione dei dati:', error);
+            }
+        }
+
+        async function playSong(songId, songTitle) {
+            const playerDiv = document.getElementById('spotifyPlayer');
+
+            const playerHtml = `
+                <div>
+                    <p>Stai ascoltando: ${songTitle}</p>
+                    <iframe src="https://open.spotify.com/embed/track/${songId}"
+                            width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media">
+                    </iframe>
+                </div>
+            `;
+            playerDiv.innerHTML = playerHtml;
+        }
+
+        renderTable();
+    </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
