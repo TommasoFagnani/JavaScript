@@ -47,9 +47,15 @@
         async function renderTable() {
             try {
                 const jsonAlbumData = await fetchAlbumData();
-                const artistName = jsonAlbumData.artists[0].name;
-                const albumTitle = jsonAlbumData.name;
-                const albumCoverUrl = jsonAlbumData.images[0].url;
+                const artistName = jsonAlbumData["artists"][0]["name"];
+                const albumTitle = jsonAlbumData["name"];
+                const albumCoverUrl = jsonAlbumData["images"][0]["url"];
+
+                console.log(artistName);
+                console.log(albumTitle);
+                console.log(albumCoverUrl);
+                
+                
 
                 let tbody = "";
                 tbody += "<td>" + artistName + "</td>";
