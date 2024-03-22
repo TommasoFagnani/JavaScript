@@ -60,11 +60,11 @@
                     const albumUrl = song.track.album.external_urls.spotify;
                     const songUrl = song.track.external_urls.spotify;
                     console.log(songUrl)
-                    tbody += "<tr id='list'>";
+                    tbody += "<tr>";
                     tbody += `<td><a href='${artistUrl}'>${artistName}</a></td>`;
                     tbody += `<td>${songTitle}</td>`;
                     tbody += `<td><img src="${albumCoverUrl}"  alt="Copertina Album" width="50"></td>`;
-                    tbody += `<td><button class="btn btn-dark" onclick='window.open("${songUrl}", "_blank");'>Play</button></td>`;                    tbody += `<td><a href='${albumUrl}'>${albumName}</a></td>`;
+                    tbody += `<td><button class="btn btn-dark" onclick='window.open("${songUrl}");'>Play</button></td>`;                    tbody += `<td><a href='${albumUrl}'>${albumName}</a></td>`;
                     tbody += "</tr>";
                 });
 
