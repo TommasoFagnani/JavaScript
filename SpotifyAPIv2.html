@@ -21,7 +21,7 @@
     <div id="spotifyPlayer"></div>
 
     <script type="text/javascript">
-        var access_token = "BQAK28S2g6sOM6cvkCYCBXXiO9MS0Eo9U6_j2PnE2kdhotHvAVfCG1xsHbvNA3Z7X_F8mvh-4NhS4b9gFMh9SPXBCCm_jkEyDsJVfT2onNF8-1TkQZQTBY42mU9gsMvSkP6HCFMZBUEYHrMheVxJbU2iU5UXNOvokUH4P_BFPul3FB2NQHzEtwL1iofLcfHYlACf6sdQTR4gOU8fREkAf7-t";
+        var access_token = "BQC2jiO6KZdP15IoT7wIr6m7QC65pvLxmvKdNW6DonTSeviUPlC3QFWf7SKEpNgOmVL2lkyucIZPjMfgEQeBq4UnwPTAzH-dS_j5YS3XHOEAHOYotpDyNTgqDsrLOep0kuJ__GSILXCJj8MLz5vmOShcIXbGS6zgeUbCeTgXlx8Duu12N8u7npkcKB6_R6Qz_wQlvqFaPWHs5-09IldlAemH";
         
         async function ascoltiRecenti() {
             try {
@@ -53,12 +53,13 @@
                     const songTitle = song.track.name;
                     const albumCoverUrl = song.track.album.images[0].url;
                     const songId = song.track.id;
+                    const songUrl = song.track.external_urls.spotify;
 
                     tbody += "<tr>";
                     tbody += `<td>${artistName}</td>`;
                     tbody += `<td>${songTitle}</td>`;
                     tbody += `<td><img src="${albumCoverUrl}" alt="Copertina Album" width="50"></td>`;
-                    tbody += `<td><button class="btn btn-dark" onclick="playSong('${songId}', '${songTitle}')">Play</button></td>`;
+                    tbody += `<td><button class="btn btn-dark" onclick='window.open("${songUrl}");'>Play</button></td>`;
                     tbody += "</tr>";
                 });
 
