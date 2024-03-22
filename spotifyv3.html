@@ -14,6 +14,7 @@
                 <th>Titolo</th>
                 <th>Copertina</th>
                 <th>Ascolta</th>
+                <th>Visualizza Album</th>
             </tr>
         </table>
     </div>
@@ -21,7 +22,7 @@
     <div id="spotifyPlayer"></div>
 
     <script type="text/javascript">
-        var access_token = "AQDWSlVzcIVjFPbne9YpdZOt5DQ-0HDOGL-Pt7InRKVhwFWGS1hIdysRsHhr2M3o8ThFd8n8opk-CAbpgnIxn0Wki4ByMHGSDoOQa2i995sZ0rzUxw7Ji5he1iFWur02Fat_zPG-AKyj3e00EAxA2KOWnyK3p0Qxk7cw6fRM2fe49AmGSmbgtoiInA31JgV9zHzFF8x9szGs24YG-GGjPbPOS7ESuqbCzdaROuxA2QaK0t-Mf6fzutqMGo7EUMuQwA";
+        var access_token = "BQC2jiO6KZdP15IoT7wIr6m7QC65pvLxmvKdNW6DonTSeviUPlC3QFWf7SKEpNgOmVL2lkyucIZPjMfgEQeBq4UnwPTAzH-dS_j5YS3XHOEAHOYotpDyNTgqDsrLOep0kuJ__GSILXCJj8MLz5vmOShcIXbGS6zgeUbCeTgXlx8Duu12N8u7npkcKB6_R6Qz_wQlvqFaPWHs5-09IldlAemH";
 
         async function ascoltiRecenti() {
             try {
@@ -52,14 +53,18 @@
                     const artistName = song.track.artists[0].name;
                     const songTitle = song.track.name;
                     const albumCoverUrl = song.track.album.images[0].url;
+                    const albumName = song.track.album.name;
                     const songId = song.track.id;
                     const albumID = song.track.album.id;
-
-                    tbody += "<tr>";
-                    tbody += `<td>${artistName}</td>`;
+                    const artistUrl = song.track.artists[0].external_urls.spotify;
+                    const albumUrl = song.track.album.external_urls.spotify;
+                    const songUrl = song.track.external_urls.spotify;
+                    console.log(songUrl)
+                    tbody += "<tr id='list'>";
+                    tbody += `<td><a href='${artistUrl}'>${artistName}</a></td>`;
                     tbody += `<td>${songTitle}</td>`;
-                    tbody += `<td><img src="${albumCoverUrl}" onclick="listaCanzoni('${albumID}')" alt="Copertina Album" width="50"></td>`;
-                    tbody += `<td><button class="btn btn-dark" onclick="playSong('${songId}', '${songTitle}', '${albumCoverUrl}', ${index})">Play</button></td>`;
+                    tbody += `<td><img src="${albumCoverUrl}"  alt="Copertina Album" width="50"></td>`;
+                    tbody += `<td><button class="btn btn-dark" onclick='window.open("${songUrl}", "_blank");'>Play</button></td>`;                    tbody += `<td><a href='${albumUrl}'>${albumName}</a></td>`;
                     tbody += "</tr>";
                 });
 
@@ -90,62 +95,10 @@
             }
         }
 
-        function mostra() {
-            const tabellaRecenti = document.getElementById('recenti');
-            tabellaRecenti.style.display = "";
-        }
 
-        async function listaCanzoni(albumID) {
-            const jsonAlbumData = await fetchAlbumData(albumID);
-            const tracks = jsonAlbumData.tracks.items;
-            const lista = document.getElementById('albumRec');
-            lista.innerHTML = ''; // Pulisci il contenuto precedente
 
-            let selectHtml = '<select onchange="playSelectedSong(this)">';
-            selectHtml += '<option value="">Seleziona una canzone</option>';
+        
 
-            tracks.forEach(track => {
-                selectHtml += `<option value="${track.id}">${track.name}</option>`;
-            });
-            selectHtml += '</select>';
-
-            const selectCell = document.createElement('td');
-            selectCell.innerHTML = selectHtml;
-
-            lista.appendChild(selectCell);
-        }
-
-        async function playSong(songId, songTitle, albumCoverUrl, selectedIndex) {
-            const tableRows = document.getElementById('songTableRow').rows;
-
-            // Rimuovi eventuali player già presenti
-            for (let i = 0; i < tableRows.length; i++) {
-                if (i !== selectedIndex) {
-                    const playerRow = document.getElementById(`playerRow-${i}`);
-                    if (playerRow) {
-                        playerRow.remove();
-                    }
-                }
-            }
-
-            const selectedRow = tableRows[selectedIndex];
-            if (selectedRow) {
-                const playerHtml = `
-                    <tr id="playerRow-${selectedIndex}">
-                        <td colspan="4">
-                            <div>
-                                <p>Stai ascoltando: ${songTitle}</p>
-                                <iframe src="https://open.spotify.com/embed/track/${songId}"
-                                        width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media">
-                                </iframe>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-
-                selectedRow.innerHTML('afterend', playerHtml);
-            }
-        }
 
         renderTable();
     </script>
