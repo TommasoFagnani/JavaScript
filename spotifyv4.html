@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canzoni Ascoltate di Recente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<style>
+    body {
+        background-color: black;
+      }
+</style>
+<body>
+    <div id="recenti">
+        <table class="table table-dark table-striped" border="1" id="songTableRow">
+            <tr>
+                <th>Artista</th>
+                <th>Titolo</th>
+                <th>Copertina</th>
+                <th>Ascolta</th>
+                <th>Visualizza Album</th>
+            </tr>
+        </table>
+    </div>
+
+    <div id="spotifyPlayer"></div>
+
+    <script type="text/javascript">
+        var access_token = "BQACsVSv9yFL6q8lv8QRfLXNOR_PYhCMJh7jwnfkaQqkqfMxOQJyzbG8CfQ52z1NA5dBmCcRfTkUHkfLEtL6Q51I3-V2qjH2iYS_XZfye5SFKp9RC1WfSobA9tYUxZed9hac8Us4q0XOJ2dy5kmDxySxIytEQF7wBxCK6hH_qnEPoMN3C8zaQL-fQRKvuwiNHOB09T3VSFQYYWrQXp1wkYQG";
+
+        async function ascoltiRecenti() {
+            try {
+                const response = await fetch('https://api.spotify.com/v1/me/player/recently-played', {
+                    headers: {
+                        'Authorization': `Bearer ${access_token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Errore nella richiesta: ${response.status}`);
+                }
+
+                const jsonData = await response.json();
+                return jsonData.items;
+            } catch (error) {
+                console.error('Errore durante la richiesta:', error);
+                return [];
+            }
+        }
+
+        async function renderTable() {
+            try {
+                const recentSongs = await ascoltiRecenti();
+                let tbody = "";
+
+                recentSongs.forEach((song) => {
+                    const album = song.track.album;
+                    const artistName = song.track.artists[0].name;
+                    const songTitle = song.track.name;
+                    const albumCoverUrl = song.track.album.images[0].url;
+                    const albumName = song.track.album.name;
+                    const songId = song.track.id;
+                    const albumID = song.track.album.id;
+                    const artistUrl = song.track.artists[0].external_urls.spotify;
+                    const albumUrl = song.track.album.external_urls.spotify;
+                    const songUrl = song.track.external_urls.spotify;
+
+                    tbody += "<tr>";
+                    tbody += `<td><a href="${artistUrl}" target="_blank">${artistName}</a></td>`;
+                    tbody += `<td>${songTitle}</td>`;
+                    tbody += `<td><img src="${albumCoverUrl}" alt="Copertina Album" width="50"></td>`;
+                    tbody += `<td><button class="btn btn-primary" onclick="playSelectedSong('${songId}')">Play</button></td>`;
+                    tbody += `<td><button class="btn btn-primary" onclick="songList('${albumID}')">Vai all'album</button></td>`;
+                    tbody += "</tr>";
+                });
+
+                const tableBody = document.getElementById('songTableRow');
+                tableBody.innerHTML = tbody;
+
+            } catch (error) {
+                console.error('Errore durante la visualizzazione dei dati:', error);
+            }
+        }
+        function nascondiPlayer(){
+            var player = document.getElementById("player");
+            //console.log(player)
+            player.parentNode.removeChild(player);
+            
+        }
+
+        
+        async function playSelectedSong(songId) {
+            const tab = document.getElementById('songTableRow');
+            console.log("song id real: ", songId    )
+            
+            for (let i = 0; i<tab.rows.length ; i++) {
+                var songSelectedId = tab.rows[i].children[3].children[0].getAttribute('onclick').split("'")[1];
+                if (songSelectedId == songId){
+                    var rowSelected = tab.rows[i];
+                    const playerHtml = `
+                    <div class="table table-dark table-striped" id="player">
+                        <iframe src="https://open.spotify.com/embed/track/${songId}"
+                                width="400" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media">
+                        </iframe>
+                        <button onclick="nascondiPlayer()" style="color:white;">Nascondi</button>
+                    </div>
+                    `;
+                    rowSelected.insertAdjacentHTML("afterend", playerHtml);
+                } 
+            }
+
+            
+            
+            
+        }
+
+        async function songList(albumID) {
+            const tab = document.getElementById('songTableRow');
+            const albm = await fetch(`https://api.spotify.com/v1/albums/${albumID}/tracks`, {
+                headers: {
+                    'Authorization': `Bearer ${access_token}`
+                }
+            });
+                var album = await albm.json();
+                ALBUM = album.items;
+                var nCanzoni = ALBUM.length;
+                var song = ALBUM[0]
+                
+         
+
+                
+                
+                
+                
+                for (let i = 0; i<tab.rows.length ; i++) {
+                    var selection = tab.rows[i].children[4].children[0].getAttribute('onclick').split("'")[1];
+                    console.log(selection)
+                    if (selection == albumID){
+                        var rowSelected = tab.rows[i];
+                        let stringAlbum = 
+                `   <table>
+                        <tr id="albumPlayer">
+                            <td>
+                                <iframe 
+                                    style="border-radius:12px" 
+                                    src="https://open.spotify.com/embed/album/${albumID}?utm_source=generator" 
+                                    width="100%" height="352" 
+                                    frameBorder="0" 
+                                    allowfullscreen="" 
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                    loading="lazy">
+
+                                </iframe>
+
+        
+                            </td>
+                            <td><button onclick="nascondiAlbum()">Nascondi</button></td>
+                        </tr>
+                    </table>
+                `
+                ;
+                        rowSelected.insertAdjacentHTML("afterend", stringAlbum);
+                    }
+                }
+                
+  
+        }
+        function nascondiAlbum(){
+            var Albumplayer = document.getElementById("albumPlayer");
+            console.log(Albumplayer)
+            Albumplayer.parentNode.removeChild(Albumplayer);
+            
+        }
+
+    
+
+        renderTable();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
